@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>GO Admin</title><meta name="robots" content="noindex">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;800&family=Inter:wght@400;500;600&display=swap">
+<style>
+:root{color-scheme:dark;--black:#050505;--panel:#111112;--panel2:#161617;--line:#2a2a2c;--text:#f4efe6;--muted:#a39d92;--orange:#ff6a00;--gold:#d9a93f;--red:#e5252a;--green:#3fb872;--pink:#ff5c9d;
+--gm:linear-gradient(135deg,#f7e2a0,#d9a93f 45%,#8f6616 70%,#f1d27c);
+--ease:cubic-bezier(.2,.7,.2,1);--t-ui:180ms;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--black);color:var(--text);font:400 16px/1.6 Inter,system-ui,sans-serif}
+h1,h2,h3{font-family:Poppins,Inter,sans-serif;margin:0;line-height:1.15}
+.metal{background:var(--gm);-webkit-background-clip:text;background-clip:text;color:transparent}
+.note{color:var(--muted);font-size:14px;margin:4px 0 0}
+button{font:inherit;cursor:pointer;transition:background var(--t-ui) var(--ease),border-color var(--t-ui) var(--ease),opacity var(--t-ui) var(--ease)}
+button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 20px;border-bottom:1px solid #4a3a14;background:#0a0a0a;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font:800 22px Poppins,sans-serif}
+.brand svg{width:54px;height:auto}
+.seg{display:flex;background:var(--panel2);border-radius:14px;padding:4px;gap:4px}
+.seg button{border:0;border-radius:11px;padding:8px 16px;background:transparent;color:var(--muted);font:600 14px Poppins,sans-serif}
+.seg button[aria-pressed=true]{background:var(--orange);color:#000}
+.hide{display:none!important}
+.admin{display:grid;grid-template-columns:210px 1fr;min-height:calc(100vh - 66px)}
+.side{border-right:1px solid var(--line);padding:18px 12px;display:flex;flex-direction:column;gap:4px}
+.side button{text-align:left;border:0;background:none;color:var(--muted);padding:10px 12px;border-radius:12px;font:500 15px Inter,sans-serif;display:flex;justify-content:space-between;gap:8px}
+.side button[aria-current=true]{background:var(--panel2);color:var(--text);box-shadow:inset 3px 0 0 var(--orange)}
+.side b{background:var(--orange);color:#000;border-radius:999px;padding:0 8px;font-size:12px;line-height:20px}
+.main{padding:24px;min-width:0}
+.main h2{font-size:26px;font-weight:600;margin-bottom:4px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:18px 0}
+.tile{background:var(--panel);border:1px solid var(--line);border-top-color:#4a3a14;border-radius:16px;padding:14px 16px}
+.tile span{color:var(--muted);font-size:13px}
+.tile strong{display:block;font:800 28px Poppins,sans-serif}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;margin-top:14px}
+.box h3{font-size:18px;font-weight:600;margin-bottom:8px}
+.scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:560px}
+th{text-align:left;color:var(--muted);font-weight:500;padding:8px 10px;border-bottom:1px solid var(--line)}
+td{padding:10px;border-bottom:1px solid var(--line)}
+.tag{display:inline-block;border-radius:999px;padding:2px 10px;font:600 12px Inter,sans-serif;border:1px solid var(--line)}
+.tag.std{border-color:var(--orange);color:var(--orange)}.tag.women{border-color:var(--pink);color:var(--pink)}.tag.kids{border-color:var(--gold);color:var(--gold)}
+.tag.ok{border-color:var(--green);color:var(--green)}.tag.bad{border-color:var(--red);color:var(--red)}
+.btn{border:0;border-radius:12px;padding:9px 16px;font:600 14px Poppins,sans-serif;background:var(--orange);color:#000}
+.btn.ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
+.btn.red{background:transparent;color:var(--red);border:1px solid var(--red)}
+.btn.lg{padding:14px 24px;font-size:16px;border-radius:14px}
+.btn:hover{opacity:.88}
+.drv{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.drv:last-child{border:0}
+.acts{display:flex;gap:8px;flex-wrap:wrap}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}
+.chip{background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:999px;padding:6px 13px;font:500 13px Inter,sans-serif}
+.chip[aria-pressed=true]{border-color:var(--orange);color:var(--orange)}
+.bars{display:flex;align-items:flex-end;gap:10px;height:150px;margin-top:10px}
+.bars div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:6px;height:100%;font-size:12px;color:var(--muted)}
+.bars i{display:block;width:100%;border-radius:8px 8px 0 0;background:linear-gradient(180deg,var(--orange),#8a3a00)}
+.bars i.now{background:var(--gm)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.web{max-width:1040px;margin:0 auto;padding:0 20px 60px}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:36px;align-items:center;padding:56px 0 40px}
+.hero h1{font-size:clamp(38px,7vw,68px);font-weight:800}
+.hero p{color:var(--muted);max-width:46ch}
+.book{background:var(--panel);border:1px solid #4a3a14;border-radius:22px;padding:20px}
+.book h3{font-size:20px;margin-bottom:6px}
+.rides{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+.ride{border:1px solid var(--line);border-radius:18px;padding:16px;background:var(--panel)}
+.ride.go{border-color:var(--orange)}.ride.plus{border-color:var(--gold)}.ride.pro{background:#000;border-color:#f1d27c}
+.ride b{font:600 20px Poppins,sans-serif}.ride p{color:var(--muted);font-size:14px;margin:4px 0 8px}
+.web h2{font-size:30px;font-weight:600;margin:48px 0 6px}
+.modes{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+.modes div{border-radius:18px;padding:16px;background:var(--panel);border-top:3px solid var(--orange)}
+.modes div:nth-child(2){border-top-color:var(--pink)}.modes div:nth-child(3){border-top-color:var(--gold)}
+.cta{margin-top:48px;border:1px solid #4a3a14;border-radius:24px;padding:28px;background:radial-gradient(120% 120% at 0 0,#3a1900,#0b0b0b 70%);display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.foot{margin-top:36px;color:var(--muted);font-size:13px}
+@media (max-width:820px){
+ .admin{grid-template-columns:1fr}
+ .side{flex-direction:row;overflow-x:auto;border-right:0;border-bottom:1px solid var(--line);padding:8px}
+ .side button{white-space:nowrap}
+ .hero,.two,.rides,.modes{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+#lg{position:fixed;inset:0;z-index:10;background:radial-gradient(60% 60% at 50% 0,#2a1400,#050505 70%);display:flex;align-items:center;justify-content:center;padding:24px}
+#lg.hide{display:none!important}
+.lgc{width:100%;max-width:360px;background:var(--panel);border:1px solid #4a3a14;border-radius:22px;padding:26px;box-shadow:inset 0 1px 0 rgba(247,226,160,.25)}
+.lgc input{width:100%;margin:10px 0 0;background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:12px 14px;color:var(--text);font:400 16px Inter,sans-serif}
+.lgc .btn{margin-top:14px;padding:12px}
+</style>
+</head>
+<body>
+<div id="lg" role="dialog" aria-label="Sign in"><div class="lgc"><div class="metal" style="font:800 34px Poppins,sans-serif">GO Admin</div><p class="note">Sign in to manage drivers, trips and payouts.</p>
+<input id="le" type="email" placeholder="admin@go.co.za" aria-label="Email" autocomplete="username"><input id="lp" type="password" placeholder="Password" aria-label="Password" autocomplete="current-password">
+<button class="btn" id="li" style="width:100%">Sign in</button><p class="note">Demo only. Any details work, and no data is saved.</p></div></div>
+<header class="top">
+  <div class="brand"><svg viewBox="0 0 200 96" role="img" aria-label="GO logo"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f7e2a0"/><stop offset=".5" stop-color="#d9a93f"/><stop offset="1" stop-color="#8f6616"/></linearGradient></defs><text x="6" y="80" font-family="Poppins,sans-serif" font-weight="800" font-size="96" fill="#fff">G</text><circle cx="146" cy="48" r="44" fill="#ff6a00"/><circle cx="146" cy="48" r="44" fill="none" stroke="url(#g)" stroke-width="2.5"/><circle cx="146" cy="48" r="26" fill="#000"/><path d="M146 33a9 9 0 0 1 9 9c0 7-9 18-9 18s-9-11-9-18a9 9 0 0 1 9-9z" fill="url(#g)"/><circle cx="146" cy="42" r="3.5" fill="#000"/></svg><span class="metal" id="ttl">Admin</span></div>
+  <div class="seg" style="align-items:center"><span class="tag std" style="margin:0 8px">Demo data</span><a href="/" class="btn ghost" style="text-decoration:none">GO website</a><button class="btn ghost" id="out">Sign out</button></div>
+</header>
+
+<div class="admin" id="admin">
+  <nav class="side" id="nav" aria-label="Admin">
+    <button data-p="ov" aria-current="true">Overview</button>
+    <button data-p="dr" aria-current="false">Drivers <b id="pc">4</b></button>
+    <button data-p="tr" aria-current="false">Trips</button>
+    <button data-p="fi" aria-current="false">Finance</button>
+  </nav>
+  <div class="main">
+    <section id="ov">
+      <h2>Overview</h2><p class="note">Sample data for the demo. Kroonstad is the first city.</p>
+      <div class="tiles">
+        <div class="tile"><span>Trips today</span><strong>214</strong></div>
+        <div class="tile"><span>Revenue today</span><strong class="metal">R12 480</strong></div>
+        <div class="tile"><span>Active drivers</span><strong id="ad">128</strong></div>
+        <div class="tile"><span>Waiting for approval</span><strong id="wa" style="color:var(--orange)">4</strong></div>
+      </div>
+      <div class="two">
+        <div class="box"><h3>Trips by mode</h3><p class="note">Standard 82% · Women 11% · Kids 7%</p>
+          <div class="bars" style="height:90px"><div><i style="height:82%"></i>Std</div><div><i style="height:11%;background:var(--pink)"></i>Women</div><div><i style="height:7%;background:var(--gold)"></i>Kids</div></div></div>
+        <div class="box"><h3>Needs attention</h3><p class="note">2 drivers have an operating permit that expires this month.</p><p class="note">1 Kids mode application is waiting for a police clearance.</p><button class="btn ghost" style="margin-top:10px" data-jump="dr">Review drivers</button></div>
+      </div>
+    </section>
+
+    <section id="dr" class="hide">
+      <h2>Driver approvals</h2><p class="note">Check ID, licence, vehicle and permit. Women and Kids modes need extra checks.</p>
+      <div class="box" id="dl"></div>
+    </section>
+
+    <section id="tr" class="hide">
+      <h2>Trips</h2>
+      <div class="chips" id="tf" role="group" aria-label="Filter by mode"><button class="chip" data-f="all" aria-pressed="true">All</button><button class="chip" data-f="std" aria-pressed="false">Standard</button><button class="chip" data-f="women" aria-pressed="false">Women</button><button class="chip" data-f="kids" aria-pressed="false">Kids</button></div>
+      <div class="box scroll"><table><thead><tr><th>Trip</th><th>Route</th><th>Mode</th><th>Driver</th><th>Fare</th><th>Status</th></tr></thead><tbody id="tb"></tbody></table></div>
+    </section>
+
+    <section id="fi" class="hide">
+      <h2>Finance</h2><p class="note">GO Standard keeps 10%. GO Plus drivers pay R199 a month plus 6%.</p>
+      <div class="tiles">
+        <div class="tile"><span>Gross this week</span><strong>R68 900</strong></div>
+        <div class="tile"><span>GO commission</span><strong class="metal">R6 210</strong></div>
+        <div class="tile"><span>Driver payouts</span><strong>R62 690</strong></div>
+        <div class="tile"><span>Plus subscriptions</span><strong>R4 179</strong></div>
+      </div>
+      <div class="box"><h3>Gross by day</h3><div class="bars" id="bars"></div></div>
+      <div class="box"><h3>Next payout run</h3><p class="note">Friday, 17:00. 128 drivers, R62 690.</p><button class="btn" id="pay" style="margin-top:10px">Run payouts</button><p class="note" id="pm" aria-live="polite"></p></div>
+    </section>
+  </div>
+</div>
+
+<script>
+(function(){
+  function $(i){return document.getElementById(i)}
+  function R(x){return 'R'+x.toLocaleString('en-ZA')}
+  var P=[['Thabo Mokoena','White Toyota Etios','Standard','3 of 3 documents'],['Nomsa Dlamini','Silver VW Polo','Women Rider','3 of 3 documents, women-only opt-in'],['Pieter Botha','Grey Hyundai i20','Kids','Police clearance missing'],['Lindiwe Khumalo','Black Toyota Corolla','Standard','Operating permit pending']];
+  var ad=128;
+  function dl(){var h='';P.forEach(function(d,i){var kid=d[2]==='Kids',cl=d[3].indexOf('missing')>-1||d[3].indexOf('pending')>-1;
+    h+='<div class="drv"><div><b>'+d[0]+'</b> <span class="tag '+(kid?'kids':d[2]==='Standard'?'std':'women')+'">'+d[2]+'</span><p class="note">'+d[1]+' · '+d[3]+'</p></div><div class="acts"><button class="btn" data-a="'+i+'"'+(cl?' disabled style="opacity:.4;cursor:not-allowed"':'')+'>Approve</button><button class="btn red" data-r="'+i+'">Reject</button></div></div>'});
+    if(!P.length)h='<p class="note">All caught up. No drivers waiting.</p>';
+    $('dl').innerHTML=h;$('pc').textContent=P.length;$('wa').textContent=P.length;$('ad').textContent=ad;
+    $('dl').querySelectorAll('[data-a]').forEach(function(b){b.onclick=function(){P.splice(+b.dataset.a,1);ad++;dl()}});
+    $('dl').querySelectorAll('[data-r]').forEach(function(b){b.onclick=function(){P.splice(+b.dataset.r,1);dl()}})}
+  dl();
+  $('li').onclick=function(){$('lg').classList.add('hide')};
+  var T=[['#2041','Home to Town centre','std','Sipho M.',45,'Done'],['#2040','Station to Hospital','women','Nomsa D.',60,'Done'],['#2039','Home to School','kids','Pieter B.',55,'Live'],['#2038','Bus rank to Hospital','std','Lindiwe K.',65,'Done'],['#2037','Town centre to Home','std','Thabo M.',95,'Done'],['#2036','Home to School','kids','Pieter B.',55,'Done'],['#2035','Hospital to Home','women','Nomsa D.',60,'Cancelled']];
+  function tb(f){var h='';T.forEach(function(t){if(f!=='all'&&t[2]!==f)return;var s=t[5]==='Done'?'ok':t[5]==='Cancelled'?'bad':'std';
+    h+='<tr><td>'+t[0]+'</td><td>'+t[1]+'</td><td><span class="tag '+t[2]+'">'+{std:'Standard',women:'Women',kids:'Kids'}[t[2]]+'</span></td><td>'+t[3]+'</td><td>'+R(t[4])+'</td><td><span class="tag '+s+'">'+t[5]+'</span></td></tr>'});$('tb').innerHTML=h}
+  tb('all');
+  document.querySelectorAll('#tf .chip').forEach(function(c){c.onclick=function(){document.querySelectorAll('#tf .chip').forEach(function(x){x.setAttribute('aria-pressed',x===c)});tb(c.dataset.f)}});
+  var D=[['Mon',7400],['Tue',8100],['Wed',9200],['Thu',10500],['Fri',14800],['Sat',12200],['Sun',6700]],mx=14800;
+  $('bars').innerHTML=D.map(function(d,i){return '<div><span>R'+(d[1]/1000).toFixed(1)+'k</span><i class="'+(i===4?'now':'')+'" style="height:'+(d[1]/mx*100)+'%"></i>'+d[0]+'</div>'}).join('');
+  $('pay').onclick=function(){$('pay').disabled=true;$('pay').style.opacity=.5;$('pm').textContent='Payouts queued for 128 drivers.'};
+  function pane(p){['ov','dr','tr','fi'].forEach(function(x){$(x).classList.toggle('hide',x!==p)});document.querySelectorAll('#nav button').forEach(function(b){b.setAttribute('aria-current',b.dataset.p===p)})}
+  document.querySelectorAll('#nav button').forEach(function(b){b.onclick=function(){pane(b.dataset.p)}});
+  document.querySelectorAll('[data-jump]').forEach(function(b){b.onclick=function(){pane(b.dataset.jump)}});
+  $('out').onclick=function(){$('lg').classList.remove('hide')};
+})();
+</script>
+</body>
+</html>

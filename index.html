@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>GO – Move your way</title>
+<meta name="description" content="GO is a ride service built for towns the big apps overlook. Safe for riders, fair to drivers.">
+<meta name="theme-color" content="#050505">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23ff6a00'/%3E%3Ctext x='32' y='45' font-family='Arial' font-weight='800' font-size='38' text-anchor='middle' fill='%23000'%3EG%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;800&family=Inter:wght@400;500;600&display=swap">
+<style>
+:root{color-scheme:dark;--black:#050505;--panel:#111112;--panel2:#161617;--line:#2a2a2c;--text:#f4efe6;--muted:#a39d92;--orange:#ff6a00;--gold:#d9a93f;--goldline:#4a3a14;--pink:#ff5c9d;--red:#e5252a;
+--gm:linear-gradient(135deg,#f7e2a0,#d9a93f 45%,#8f6616 70%,#f1d27c);--ease:cubic-bezier(.2,.7,.2,1);
+--head:Poppins,Inter,system-ui,sans-serif;--body:Inter,system-ui,sans-serif;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:calc(76px + env(safe-area-inset-top,0px))}
+body{margin:0;background:var(--black);color:var(--text);font:400 17px/1.65 var(--body)}
+h1,h2,h3{font-family:var(--head);margin:0;line-height:1.12}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+.metal{background:var(--gm);-webkit-background-clip:text;background-clip:text;color:transparent}
+.muted{color:var(--muted)}
+.nav{position:sticky;top:0;z-index:5;background:rgba(5,5,5,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--goldline)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:68px;gap:16px}
+.brand{display:flex;align-items:center;text-decoration:none}.brand svg{height:36px;width:auto}
+.links{display:flex;gap:26px;font-size:15px}.links a{text-decoration:none;color:var(--muted);transition:color 180ms var(--ease)}.links a:hover{color:var(--text)}
+.btn{display:inline-block;border:0;border-radius:14px;padding:12px 22px;font:600 15px var(--head);background:var(--orange);color:#000;cursor:pointer;text-decoration:none;transition:filter 180ms var(--ease),transform 180ms var(--ease)}
+.btn:hover{filter:brightness(1.08)}.btn:active{transform:translateY(1px)}
+.btn.ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
+.btn.lg{padding:15px 26px;font-size:16px}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.hero{position:relative;padding:84px 0 70px;background:radial-gradient(70% 80% at 85% 0%,rgba(255,106,0,.16),transparent 60%),radial-gradient(40% 50% at 0 100%,rgba(217,169,63,.08),transparent 70%)}
+.hero .wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center}
+h1{font-size:clamp(40px,6.4vw,76px);font-weight:800;letter-spacing:-.02em}
+.hero p.lede{font-size:19px;color:var(--muted);max-width:44ch;margin:22px 0 0}
+.hero .cta{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
+.book{background:var(--panel);border:1px solid var(--goldline);border-radius:24px;padding:22px;box-shadow:0 30px 80px rgba(255,106,0,.1),inset 0 1px 0 rgba(247,226,160,.25)}
+.book h2{font-size:22px;font-weight:600}
+.book small{color:var(--muted);font-size:14px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.chip{background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:999px;padding:8px 15px;font:500 14px var(--body);cursor:pointer;transition:border-color 180ms var(--ease),color 180ms var(--ease)}
+.chip[aria-pressed=true]{border-color:var(--orange);color:var(--orange)}
+.quote{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--line);padding-top:14px;margin-top:6px}
+.quote b{font:800 30px var(--head)}
+.book .btn{width:100%;margin-top:14px}
+.book input{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:12px 14px;color:var(--text);font:400 16px var(--body)}
+.book .done{display:none}.book.sent .pick{display:none}.book.sent .done{display:block}
+.sec{padding:84px 0;border-top:1px solid var(--line)}
+.sec h2{font-size:clamp(28px,4vw,44px);font-weight:600;letter-spacing:-.01em;max-width:20ch}
+.sec .sub{color:var(--muted);max-width:56ch;margin:14px 0 0}
+.tbl{margin-top:34px;border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.tr{display:grid;grid-template-columns:1.1fr 2fr auto;gap:18px;align-items:center;padding:20px 24px;border-bottom:1px solid var(--line)}
+.tr:last-child{border:0}
+.tr b{font:600 22px var(--head)}
+.tr .pr{font:800 24px var(--head)}
+.tr.pro{background:#000;box-shadow:inset 3px 0 0 #f1d27c}.tr.go{box-shadow:inset 3px 0 0 var(--orange)}.tr.cm{box-shadow:inset 3px 0 0 var(--gold)}
+.trust{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:36px}
+.trust>div{padding:6px 28px 6px 22px;border-left:3px solid var(--orange)}
+.trust>div:nth-child(2){border-color:var(--pink)}.trust>div:nth-child(3){border-color:var(--gold)}
+.trust h3{font-size:20px;font-weight:600}.trust p{color:var(--muted);margin:8px 0 0;font-size:16px}
+.fine{color:var(--muted);font-size:14px;margin-top:26px}
+.story{background:linear-gradient(180deg,#0b0805,#050505)}
+.story p{font:500 clamp(22px,3vw,34px)/1.4 var(--head);max-width:30ch;margin:0 0 22px;color:var(--text)}
+.story p.s{font:400 18px/1.7 var(--body);color:var(--muted);max-width:56ch}
+.calc{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;margin-top:30px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:24px}
+.panel label{display:flex;justify-content:space-between;font-weight:500}
+input[type=range]{width:100%;accent-color:var(--orange);margin:16px 0 8px}
+.out{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.out div{border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.out span{color:var(--muted);font-size:13px;display:block}.out strong{font:800 24px var(--head)}
+.out .gp{border-color:var(--goldline)}
+footer{border-top:1px solid var(--goldline);padding:44px 0 60px;color:var(--muted);font-size:15px}
+footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.rise{opacity:0;transform:translateY(14px);animation:rise 700ms var(--ease) forwards}
+.rise:nth-child(2){animation-delay:120ms}.rise:nth-child(3){animation-delay:240ms}.hero .book{animation-delay:360ms}
+@keyframes rise{to{opacity:1;transform:none}}
+@media (max-width:860px){
+ .links{display:none}.hero{padding:48px 0 48px}.hero .wrap,.calc{grid-template-columns:1fr}.hero .wrap{gap:36px}
+ .trust{grid-template-columns:1fr;gap:26px}.tr{grid-template-columns:1fr auto;gap:6px 14px}.tr .d{grid-column:1/-1;order:3}.sec{padding:60px 0}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.rise{animation:none;opacity:1;transform:none}*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="nav"><div class="wrap">
+  <a class="brand" href="#top" aria-label="GO home"><svg viewBox="0 0 200 96" role="img" aria-label="GO"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f7e2a0"/><stop offset=".5" stop-color="#d9a93f"/><stop offset="1" stop-color="#8f6616"/></linearGradient></defs><text x="6" y="80" font-family="Poppins,sans-serif" font-weight="800" font-size="96" fill="#fff">G</text><circle cx="146" cy="48" r="44" fill="#ff6a00"/><circle cx="146" cy="48" r="44" fill="none" stroke="url(#g)" stroke-width="2.5"/><circle cx="146" cy="48" r="26" fill="#000"/><path d="M146 33a9 9 0 0 1 9 9c0 7-9 18-9 18s-9-11-9-18a9 9 0 0 1 9-9z" fill="url(#g)"/><circle cx="146" cy="42" r="3.5" fill="#000"/></svg></a>
+  <nav class="links" aria-label="Main"><a href="#rides">Rides</a><a href="#safety">Safety</a><a href="#story">Why GO</a><a href="#drive">Drive with us</a></nav>
+  <a class="btn" href="#top" id="getapp">Get the app</a>
+</div></header>
+
+<main id="top">
+<section class="hero"><div class="wrap">
+  <div>
+    <h1 class="rise">Every ride is someone getting <span class="metal">home.</span></h1>
+    <p class="lede rise">GO is a ride service for the towns the big apps overlook. Safe for the people who ride, fair to the people who drive.</p>
+    <div class="cta rise"><a class="btn lg" href="#book-form">Book a ride</a><a class="btn lg ghost" href="#drive">Drive with GO</a></div>
+  </div>
+  <div class="book rise" id="book">
+    <div class="pick" id="book-form">
+      <h2>Where to?</h2><small>Prices are samples while we build.</small>
+      <div class="chips" id="dest" role="group" aria-label="Destination"><button class="chip" aria-pressed="true" data-p="45">Town centre</button><button class="chip" aria-pressed="false" data-p="45">Bus rank</button><button class="chip" aria-pressed="false" data-p="55">Train station</button><button class="chip" aria-pressed="false" data-p="65">Hospital</button></div>
+      <div class="chips" id="ride" role="group" aria-label="Ride type"><button class="chip" aria-pressed="true" data-a="0">GO</button><button class="chip" aria-pressed="false" data-a="20">GO Comfort</button><button class="chip" aria-pressed="false" data-a="50">GO Pro</button></div>
+      <div class="quote"><span class="muted" id="eta">About 4 minutes away</span><b class="metal" id="price">R45</b></div>
+      <button class="btn" id="req">Request ride</button>
+    </div>
+    <div class="done" aria-live="polite">
+      <h2>Almost there.</h2>
+      <p class="muted">Booking opens with the app. Leave your email and we’ll tell you the day it does.</p>
+      <input id="em" type="email" placeholder="you@example.com" aria-label="Email address" autocomplete="email">
+      <button class="btn" id="nm">Notify me</button>
+      <p class="muted" id="thx" style="margin:12px 0 0"></p>
+    </div>
+  </div>
+</div></section>
+
+<section class="sec" id="rides"><div class="wrap">
+  <h2>One fare. Three ways to ride.</h2>
+  <p class="sub">Pick what the day needs. The price is shown before you ask for a driver, and it doesn’t change on the way.</p>
+  <div class="tbl">
+    <div class="tr go"><b>GO</b><span class="muted d">Everyday rides at the lowest fare.</span><span class="pr metal">R45</span></div>
+    <div class="tr cm"><b>GO Comfort</b><span class="muted d">Newer cars and more room for bags and people.</span><span class="pr metal">R65</span></div>
+    <div class="tr pro"><b>GO Pro</b><span class="muted d">Top-rated drivers, for the days that matter.</span><span class="pr metal">R95</span></div>
+  </div>
+</div></section>
+
+<section class="sec" id="safety"><div class="wrap">
+  <h2>Safety is the product, not a feature.</h2>
+  <p class="sub">Every trip shows the driver, the car and the plate. One tap shares your trip, and one hold sends an alert.</p>
+  <div class="trust">
+    <div><h3>Standard</h3><p>Verified drivers, a live trip you can share, and an SOS that’s always a hold away.</p></div>
+    <div><h3>Women Rider</h3><p>Matched with verified women drivers who chose to join this mode.</p></div>
+    <div><h3>GO Kids</h3><p>Vetted drivers, a parent approves each trip, and a pickup PIN is handed over only at the door.</p></div>
+  </div>
+  <p class="fine">Women Rider and GO Kids are concepts until the legal and safety checks are complete.</p>
+</div></section>
+
+<section class="sec story" id="story"><div class="wrap">
+  <p>Where you live shouldn’t decide whether you get home safely.</p>
+  <p class="s">In a small town, a dependable ride at night can come down to who you know. GO exists to make it something anyone can count on, and to let the person behind the wheel keep most of what they earn. We start in one town and grow one town at a time, the same way: slowly, carefully, and with the people who live there.</p>
+</div></section>
+
+<section class="sec" id="drive"><div class="wrap">
+  <h2>Drive with GO. Keep 90% of every fare.</h2>
+  <p class="sub">No sign-up charge. Pay a commission on completed trips only. GO Plus is optional: R199 a month and a lower 6% commission.</p>
+  <div class="calc">
+    <div class="panel">
+      <label for="tp"><span>Trips a day</span><b id="tv">6</b></label>
+      <input id="tp" type="range" min="2" max="12" value="6">
+      <p class="muted" style="margin:0;font-size:14px">Example: R80 average fare, 26 working days a month.</p>
+      <div class="out"><div><span>GO Standard</span><strong id="o1">R0</strong></div><div class="gp"><span>GO Plus, after R199</span><strong class="metal" id="o2">R0</strong></div></div>
+      <p class="muted" style="margin:12px 0 0;font-size:13px">Before fuel and car costs.</p>
+    </div>
+    <div><h3 style="font-size:26px;font-weight:600">Be your own boss.</h3><p class="muted">Set your own hours, see your earnings after every trip, and get paid on a fixed day each week.</p><a class="btn lg" href="#top" id="apply">Apply to drive</a><p class="muted" id="ap" style="margin-top:12px"></p></div>
+  </div>
+</div></section>
+</main>
+
+<footer><div class="wrap"><div><b class="metal" style="font:800 22px var(--head)">GO</b><br>Move your way.</div><div>This is a prototype with sample prices.<br><a href="/admin/">Admin demo</a></div></div></footer>
+
+<script>
+(function(){
+  function $(i){return document.getElementById(i)}
+  function R(n){return 'R'+Math.round(n).toLocaleString('en-ZA')}
+  var dest=45,add=0,E=['4','5','6','4'];
+  function quote(){$('price').textContent=R(dest+add)}
+  function group(id,fn){var g=$(id).querySelectorAll('.chip');g.forEach(function(c){c.onclick=function(){g.forEach(function(x){x.setAttribute('aria-pressed',x===c)});fn(c)}})}
+  group('dest',function(c){dest=+c.dataset.p;$('eta').textContent='About '+E[[].indexOf.call($('dest').children,c)]+' minutes away';quote()});
+  group('ride',function(c){add=+c.dataset.a;quote()});
+  $('req').onclick=function(){$('book').classList.add('sent');$('em').focus()};
+  $('nm').onclick=function(){var v=$('em').value.trim();$('thx').textContent=/.+@.+\..+/.test(v)?'Thank you. You’re on the list.':'Please enter a valid email address.'};
+  $('getapp').onclick=function(e){e.preventDefault();$('book').scrollIntoView({behavior:'smooth',block:'center'});$('req').click()};
+  $('apply').onclick=function(e){e.preventDefault();$('ap').textContent='Driver sign-up opens soon. Check back here.'};
+  function calc(){var t=+$('tp').value,m=t*26*80;$('tv').textContent=t;$('o1').textContent=R(m*.9);$('o2').textContent=R(m*.94-199)}
+  $('tp').oninput=calc;calc();
+})();
+</script>
+</body>
+</html>
